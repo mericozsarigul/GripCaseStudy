@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "b7d8ad7b-a469-47b2-9b1f-b225228368d3",
+		"name": "GripCase",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6137662"
+	},
+	"item": [
+		{
+			"name": "Get Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5145/api/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5145",
+					"path": [
+						"api",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmFtZWlkIjoiYWRtaW4iLCJuYmYiOjE2ODg5NzMwMzMsImV4cCI6MTY4OTU3NzgzMywiaWF0IjoxNjg4OTczMDMzfQ.jYR1ITwuYXoxg_qQECIlQSWHTOwzFlhEPaRyIaGiJ-I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5145/api/image",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5145",
+					"path": [
+						"api",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User's Images Id List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmFtZWlkIjoiYWRtaW4iLCJuYmYiOjE2ODg5NzMwMzMsImV4cCI6MTY4OTU3NzgzMywiaWF0IjoxNjg4OTczMDMzfQ.jYR1ITwuYXoxg_qQECIlQSWHTOwzFlhEPaRyIaGiJ-I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5145/api/image",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5145",
+					"path": [
+						"api",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmFtZWlkIjoiYWRtaW4iLCJuYmYiOjE2ODg5NzMwMzMsImV4cCI6MTY4OTU3NzgzMywiaWF0IjoxNjg4OTczMDMzfQ.jYR1ITwuYXoxg_qQECIlQSWHTOwzFlhEPaRyIaGiJ-I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5145/api/Image/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5145",
+					"path": [
+						"api",
+						"Image",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
