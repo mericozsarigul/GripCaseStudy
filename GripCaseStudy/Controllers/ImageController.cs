@@ -14,11 +14,13 @@ namespace GripCaseStudy.Controllers
     {
         private readonly IImageRepository _imageRepository;
         private readonly IUserService _userService;
+        private readonly IImageService _imageService;
 
-        public ImageController(IImageRepository imageRepository, IUserService userService)
+        public ImageController(IImageRepository imageRepository, IUserService userService, IImageService imageService)
         {
             _imageRepository = imageRepository;
             _userService = userService;
+            _imageService = imageService;
         }
 
         [HttpPost]
@@ -38,11 +40,17 @@ namespace GripCaseStudy.Controllers
 
                     if(user != null)
                     {
-                        await _imageRepository.Create(new ImageModel
+                        using (var stream = file.OpenReadStream())
                         {
-                            UserId = user.Id,
-                            ImageBase64 = imgBase64
-                        });
+                            var thumbnail = _imageService.GenerateThumbnailBase64(stream);
+
+                            await _imageRepository.Create(new ImageModel
+                            {
+                                UserId = user.Id,
+                                ImageBase64 = imgBase64,
+                                ImageThumbBase64 = thumbnail
+                            });
+                        }                        
                     }
                     else
                         return Unauthorized();
@@ -56,7 +64,7 @@ namespace GripCaseStudy.Controllers
             }
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             try

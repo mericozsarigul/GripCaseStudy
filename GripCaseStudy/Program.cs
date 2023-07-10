@@ -24,6 +24,8 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IImageRepository, ImageRepository>();
     services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IImageService, ImageService>();
+
     var key = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("Security:JwtKey"));
 
     builder.Services.AddAuthentication(options =>
