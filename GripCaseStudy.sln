@@ -5,10 +5,6 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GripCaseStudy", "GripCaseStudy\GripCaseStudy.csproj", "{9A0941B8-42D9-4A91-A5F9-9E7581DF8682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GripCaseStudyTest", "GripCaseStudyTest\GripCaseStudyTest.csproj", "{9E38F26A-DADF-4472-B70E-6F60695FF3E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GripCaseStudyTests", "GripCaseStudyTests\GripCaseStudyTests.csproj", "{95F5CA02-460D-4D94-BA40-4F7ADBB8EFF8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{9A0941B8-42D9-4A91-A5F9-9E7581DF8682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A0941B8-42D9-4A91-A5F9-9E7581DF8682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A0941B8-42D9-4A91-A5F9-9E7581DF8682}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E38F26A-DADF-4472-B70E-6F60695FF3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E38F26A-DADF-4472-B70E-6F60695FF3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E38F26A-DADF-4472-B70E-6F60695FF3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E38F26A-DADF-4472-B70E-6F60695FF3E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{95F5CA02-460D-4D94-BA40-4F7ADBB8EFF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{95F5CA02-460D-4D94-BA40-4F7ADBB8EFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{95F5CA02-460D-4D94-BA40-4F7ADBB8EFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{95F5CA02-460D-4D94-BA40-4F7ADBB8EFF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
