@@ -11,12 +11,12 @@ namespace GripCaseStudy.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class TokenController : ControllerBase
     {
         private readonly IUserService _userService;
         protected readonly IConfiguration Configuration;
 
-        public UserController(IConfiguration configuration, IUserService userService)
+        public TokenController(IConfiguration configuration, IUserService userService)
         {
             Configuration = configuration;
             _userService = userService;
@@ -24,7 +24,7 @@ namespace GripCaseStudy.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Authenticate([FromBody]LoginUser model)
+        public async Task<IActionResult> Post([FromBody]LoginUser model)
         {
             try
             {
@@ -33,34 +33,13 @@ namespace GripCaseStudy.Controllers
                 if (user == null)
                     return BadRequest(new { message = "Username or password is not correct." });
 
-                var token = GenerateJwtToken(user);
+                var token = await _userService.GenerateJwtToken(user);
                 return Ok(new { token });
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-        }
-
-        private string GenerateJwtToken(User user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Configuration.GetValue<string>("Security:JwtKey")
-                        ?? throw new Exception("Jwt key can not be null.");
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.NameIdentifier, user.Username)
-            }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
         }
     }
 }

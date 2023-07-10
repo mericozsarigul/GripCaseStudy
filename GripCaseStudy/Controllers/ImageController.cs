@@ -4,7 +4,6 @@ using GripCaseStudy.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GripCaseStudy.Controllers
 {
@@ -37,11 +36,16 @@ namespace GripCaseStudy.Controllers
                     string imgBase64 = Convert.ToBase64String(fileBytes);
                     var user = await _userService.GetUserFromToken(Request.Headers[HeaderNames.Authorization].ToString());
 
-                    await _imageRepository.Create(new ImageModel
+                    if(user != null)
                     {
-                        UserId = user.Id,
-                        ImageBase64 = imgBase64
-                    });
+                        await _imageRepository.Create(new ImageModel
+                        {
+                            UserId = user.Id,
+                            ImageBase64 = imgBase64
+                        });
+                    }
+                    else
+                        return Unauthorized();
                 }
 
                 return Ok();
@@ -63,8 +67,13 @@ namespace GripCaseStudy.Controllers
 
                 var images = await _imageRepository.GetUserAllImages(user.Id);
 
-                return Ok(new { images });
+                if (images.Any())
+                {
+                    var response = images.Select(s=>s.Id).ToList();
+                    return Ok(new { response });
+                }
 
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -79,7 +88,10 @@ namespace GripCaseStudy.Controllers
             {
                 var image = await _imageRepository.GetById(id);
 
-                return Ok(new { image.ImageBase64 });
+                if (image == null)
+                    return NotFound();
+
+                return Ok(new { image.ImageBase64,image.ImageThumbBase64 });
 
             }
             catch (Exception ex)

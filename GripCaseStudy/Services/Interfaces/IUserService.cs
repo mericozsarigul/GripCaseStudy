@@ -6,6 +6,6 @@ namespace GripCaseStudy.Services.Interfaces
     {
         public Task<User?> Authenticate(string username, string password);
         public Task<User?> GetUserFromToken(string token);
-
+        public Task<string> GenerateJwtToken(User user);
     }
 }
