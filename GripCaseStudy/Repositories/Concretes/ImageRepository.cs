@@ -16,13 +16,15 @@ namespace GripCaseStudy.Repositories.Concretes
         public async Task Create(ImageModel image)
         {
             using var connection = _context.CreateConnection();
-            var sql = "INSERT INTO Images (UserId, ImageBase64) VALUES (@UserId, @ImageBase64)";
+            var sql = "INSERT INTO Images (UserId, ImageBase64, ImageThumbBase64) VALUES (@UserId, @ImageBase64, @ImageThumbBase64)";
             await connection.ExecuteAsync(sql, image);
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            using var connection = _context.CreateConnection();
+            var sql = "DELETE FROM Images WHERE Id=@id";
+            await connection.ExecuteAsync(sql, id);
         }
 
         public async Task<IEnumerable<ImageModel>> GetAll()
@@ -46,9 +48,11 @@ namespace GripCaseStudy.Repositories.Concretes
             return await connection.QueryAsync<ImageModel>(sql, new { userId });
         }
 
-        public Task Update(ImageModel image)
+        public async Task Update(ImageModel image)
         {
-            throw new NotImplementedException();
+            using var connection = _context.CreateConnection();
+            var sql = "UPDATE Images Set ImageBase64 = @ImageBase64, ImageThumbBase64=@ImageThumbBase64  WHERE Id=@id";
+            await connection.ExecuteAsync(sql, image);
         }
     }
 }

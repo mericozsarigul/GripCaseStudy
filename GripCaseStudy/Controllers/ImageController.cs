@@ -38,7 +38,7 @@ namespace GripCaseStudy.Controllers
                     string imgBase64 = Convert.ToBase64String(fileBytes);
                     var user = await _userService.GetUserFromToken(Request.Headers[HeaderNames.Authorization].ToString());
 
-                    if(user != null)
+                    if (user != null)
                     {
                         using (var stream = file.OpenReadStream())
                         {
@@ -50,13 +50,76 @@ namespace GripCaseStudy.Controllers
                                 ImageBase64 = imgBase64,
                                 ImageThumbBase64 = thumbnail
                             });
-                        }                        
+                        }
                     }
                     else
                         return Unauthorized();
                 }
 
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(IFormFile file, int Id)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                    return BadRequest("Please select file.");
+
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string imgBase64 = Convert.ToBase64String(fileBytes);
+                    var user = await _userService.GetUserFromToken(Request.Headers[HeaderNames.Authorization].ToString());
+
+                    if (user != null)
+                    {
+                        using (var stream = file.OpenReadStream())
+                        {
+                            var thumbnail = _imageService.GenerateThumbnailBase64(stream);
+
+                            await _imageRepository.Update(new ImageModel
+                            {
+                                Id = Id,
+                                UserId = user.Id,
+                                ImageBase64 = imgBase64,
+                                ImageThumbBase64 = thumbnail
+                            });
+                        }
+                    }
+                    else
+                        return Unauthorized();
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var image = await _imageRepository.GetById(id);
+
+                if (image == null)
+                    return NotFound();
+
+                await _imageRepository.Delete(id);
+
+                return Ok();
+
             }
             catch (Exception ex)
             {
@@ -77,7 +140,7 @@ namespace GripCaseStudy.Controllers
 
                 if (images.Any())
                 {
-                    var response = images.Select(s=>s.Id).ToList();
+                    var response = images.Select(s => s.Id).ToList();
                     return Ok(new { response });
                 }
 
@@ -99,7 +162,7 @@ namespace GripCaseStudy.Controllers
                 if (image == null)
                     return NotFound();
 
-                return Ok(new { image.ImageBase64,image.ImageThumbBase64 });
+                return Ok(new { image.ImageBase64, image.ImageThumbBase64 });
 
             }
             catch (Exception ex)
